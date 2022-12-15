@@ -29,7 +29,40 @@ function handleSubmit(e) {
     async function wikiApiCall(searchInput){
 
         //await fetch : j'attend la repose de fetch ; fetch veut dire aller chercher 
-        const response = await fetch()
+        const response = await fetch(`https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srlimit=20&srsearch=${searchInput}`);
+
+
+        const data = await response.json();
+
+        console.log(data);
+
+        //je lui passe les resultats de la recherche 
+
+        createCards(data.query.search)
+
+    }
+
+    function createCards(data) {
+
+        //si la reponse est vide cad le tableau de retour de  ma recherche ne contient rien j'affiche un message  : aucun resultat
+
+        if(!data.length){
+            errorMsg.textContent = "Aucun resultat DESOLE"
+            return;
+        }
+        //sinon on vient creer nos cartes 
+        //pour chaque element on créer une carte 
+
+        const card = document.createElement("div");
+        card.className = "result-item";
+        card.innerHTML = `
+        <h3 class="result-title">
+            <a href="" target="_blank">${el.title}</a>
+        </h3>
+        `
+
+
+
 
     }
 
